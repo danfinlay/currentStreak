@@ -1,23 +1,26 @@
 module.exports = function currentStreak(gameResults) {
-  var streakType, prefix
+  var streakType = 1
+  var prefix
   var result = 0
 
-  gameResults.forEach(function(game) {
-    if (typeof game === 'undefined') return
+  // Strip the contents out of their arrays
+  var results = gameResults.map(function(res) {
+    return res[0]
+  })
 
-    if (streakType === undefined) {
-      streakType = game
-    }
+  results.forEach(function(game) {
+    if (game === '') return
 
     if (game === streakType) {
       result++
+
     } else {
       result = 1
       streakType = game
     }
   })
 
-  prefix = streakType === 1 ? 'W' : streakType === -1 ? 'L' : 'D'
+  prefix = streakType === 1 ? 'W' : 'L'
 
   return prefix + String(result)
 }
